@@ -72,6 +72,18 @@ command -v "$CAST_BIN" >/dev/null 2>&1 || {
   exit 1
 }
 
+LASNA_CHAIN_ID=$("$CAST_BIN" chain-id --rpc-url "$LASNA_RPC")
+if [ "$LASNA_CHAIN_ID" != "5318007" ]; then
+  echo "LASNA_RPC is chain $LASNA_CHAIN_ID, expected 5318007" >&2
+  exit 1
+fi
+
+DEST_CHAIN_ID_ONCHAIN=$("$CAST_BIN" chain-id --rpc-url "$DEST_RPC")
+if [ "$DEST_CHAIN_ID_ONCHAIN" != "$DEST_CHAIN_ID" ]; then
+  echo "Destination RPC is chain $DEST_CHAIN_ID_ONCHAIN, expected $DEST_CHAIN_ID" >&2
+  exit 1
+fi
+
 "$FORGE_BIN" build
 
 echo "Deploying OmniStopReactive on Lasna 5318007..."
