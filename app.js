@@ -38,7 +38,7 @@ const renderContracts = () => {
     {
       key: "reactive",
       chain: "Lasna 5318007",
-      href: (value) => `https://reactscan.net/address/${value}`,
+      href: (value) => `https://lasna.reactscan.net/address/${value}`,
       label: "View on Reactscan"
     },
     {
@@ -95,7 +95,7 @@ const renderLatency = () => {
     {
       label: "Reactive tx",
       value: DEPLOYED.reactiveTx,
-      href: `https://reactscan.net/tx/${DEPLOYED.reactiveTx}`,
+      href: `https://lasna.reactscan.net/tx/${DEPLOYED.reactiveTx}`,
       linkLabel: "View reactive"
     },
     {
