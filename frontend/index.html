@@ -13,6 +13,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <noscript><p class="noscript-note">Run data is rendered by app.js. The same addresses and hashes are in README.md.</p></noscript>
 
   <header class="site-header">
     <div class="wrap header-inner">
@@ -144,8 +145,8 @@
             <tbody id="latency-body">
               <tr class="empty-row">
                 <td colspan="4">
-                  <strong>No funded run recorded yet.</strong>
-                  <span>Deploy, fund both contracts, then run <code>scripts/trigger-move.sh</code>. The hashes land here.</span>
+                  <strong>Loading recorded run.</strong>
+                  <span>If this message stays, JavaScript is disabled. The same evidence is in <code>README.md</code>.</span>
                 </td>
               </tr>
             </tbody>
@@ -155,7 +156,7 @@
         <aside class="ledger-notes" aria-label="Run status">
           <div class="note">
             <span class="note-label">Status</span>
-            <strong id="run-status">Awaiting first funded run</strong>
+            <strong id="run-status">Loading recorded run</strong>
           </div>
           <div class="note">
             <span class="note-label">On-chain leg</span>
@@ -182,18 +183,18 @@
       <ul class="contract-list" id="contract-list">
         <li class="contract-row" data-contract="reactive">
           <span class="contract-name">Reactive<small>Lasna 5318007</small></span>
-          <code class="contract-address">Pending deployment</code>
-          <span class="contract-link">Run <code>scripts/deploy.sh</code></span>
+          <code class="contract-address">Loading address</code>
+          <span class="contract-link">From <code>app.js</code></span>
         </li>
         <li class="contract-row" data-contract="executor">
           <span class="contract-name">Executor<small>Base Sepolia 84532</small></span>
-          <code class="contract-address">Pending deployment</code>
-          <span class="contract-link">Run <code>scripts/deploy.sh</code></span>
+          <code class="contract-address">Loading address</code>
+          <span class="contract-link">From <code>app.js</code></span>
         </li>
         <li class="contract-row" data-contract="pool">
           <span class="contract-name">Origin pool<small>MockSyncPair, test-only</small></span>
-          <code class="contract-address">Pending deployment</code>
-          <span class="contract-link">Set <code>POOL_ADDRESS</code></span>
+          <code class="contract-address">Loading address</code>
+          <span class="contract-link">From <code>app.js</code></span>
         </li>
       </ul>
 
