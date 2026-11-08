@@ -257,7 +257,7 @@ breach    if moveBps &gt;= thresholdBps</code></pre>
 
           <article id="latency-method">
             <h3>Latency method</h3>
-            <p>Three timestamps matter: the origin receipt timestamp on Base Sepolia, the reactive transaction timestamp on Lasna, and the callback receipt timestamp on Base Sepolia. No block-number math is used on Base Sepolia.</p>
+            <p>Three timestamps matter: the origin receipt timestamp on Base Sepolia, the reactive transaction timestamp on Lasna, and the callback receipt timestamp on Base Sepolia. No block count math is used on Base Sepolia.</p>
             <p>The reactive contract emits <code>LatencyMeasured(originTxHash, reactTs)</code>. The executor emits <code>SwapExecuted(price, originTxHash, callbackTs, reactiveToCallbackMs)</code>. Full-loop latency is <code>callbackTs - originTs</code>, measured after the run from the two receipts with <code>cast</code>.</p>
             <p class="fine">The current <code>LogRecord</code> ABI has no origin block timestamp. <code>originTs</code> therefore comes from the origin receipt, not from the reactive payload. The on-chain event records the reactive-to-callback leg it can prove. Cross-chain clock skew can make that leg larger than the same-chain full loop.</p>
           </article>

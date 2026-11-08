@@ -7,3 +7,5 @@ deployments/
 lib/
 .forge/
 .DS_Store
+.npm-cache/
+.tmp-vercel/

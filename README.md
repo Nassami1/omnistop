@@ -8,6 +8,8 @@ A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio wit
 
 **Live site:** [https://nassami1.github.io/omnistop/](https://nassami1.github.io/omnistop/)
 
+**Verification:** [VERIFICATION.md](VERIFICATION.md). **Demo script:** [DEMO.md](DEMO.md).
+
 ## What is here
 
 | Path | Purpose |
@@ -214,7 +216,8 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | --- | --- |
 | Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
 | README with track, architecture, addresses, hashes, full-loop latency | Pass: live addresses, hashes, and 2,000 ms recorded |
-| Demo video under 3 minutes | Pending |
+| Demo video under 3 minutes | FAIL: not recorded; exact script in `DEMO.md` |
+| DoraHacks submission complete | FAIL: video missing; not uploaded |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
 | Live frontend URL | Pass: https://nassami1.github.io/omnistop/ |
