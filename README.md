@@ -4,11 +4,11 @@ Reactive stop-loss and take-profit for a Uniswap V2 pool, built for the **Reacti
 
 A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio with the last breached price. A breach requests an authenticated callback on Base Sepolia, and the executor records the signal.
 
-**Status:** live on Base Sepolia and Lasna. The full loop is recorded below. The demo video and DoraHacks submission are still pending.
+**Status:** live on Base Sepolia and Lasna. The full loop is recorded below. The demo video is recorded at `demo/omnistop-demo.mp4` (2:06, captioned). The DoraHacks upload is still pending.
 
 **Live site:** [https://nassami1.github.io/omnistop/](https://nassami1.github.io/omnistop/)
 
-**Verification:** [VERIFICATION.md](VERIFICATION.md). **Demo script:** [DEMO.md](DEMO.md).
+**Verification:** [VERIFICATION.md](VERIFICATION.md). **Demo script:** [DEMO.md](DEMO.md). **Demo video:** [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4).
 
 ## What is here
 
@@ -23,6 +23,7 @@ A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio wit
 | `scripts/deploy.sh` | Reactive first, executor second, attach executor |
 | `scripts/trigger-move.sh` | Swap, wait for both transactions, measure the full loop |
 | `assets/logo.png` | Supplied mark, light wordmark variant for the dark header |
+| `demo/omnistop-demo.mp4` | Captioned 2:06 evidence walkthrough |
 
 ## Architecture
 
@@ -50,7 +51,7 @@ Live on Base Sepolia and Lasna.
 
 | Contract | Chain | Address |
 | --- | --- | --- |
-| OmniStopReactive | Lasna 5318007 | [0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348](https://reactscan.net/address/0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348) |
+| OmniStopReactive | Lasna 5318007 | [0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348](https://lasna.reactscan.net/address/0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348) |
 | OmniStopExecutor | Base Sepolia 84532 | [0xd666DCE5C51c36D24c513AE98767229FC3fbAa40](https://sepolia.basescan.org/address/0xd666DCE5C51c36D24c513AE98767229FC3fbAa40) |
 | Origin pool, MockSyncPair | Base Sepolia 84532 | [0x77B728A427a331485e0B20D4cfE0ce7346D9DA83](https://sepolia.basescan.org/address/0x77B728A427a331485e0B20D4cfE0ce7346D9DA83) |
 
@@ -67,7 +68,7 @@ Recorded on 2026-11-08. The frontend reads the same values from `frontend/app.js
 
 | Origin tx | Reactive tx | Callback tx | Full-loop ms |
 | --- | --- | --- | --- |
-| [0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389](https://sepolia.basescan.org/tx/0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389) | [0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d](https://reactscan.net/tx/0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d) | [0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a](https://sepolia.basescan.org/tx/0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a) | 2,000 ms |
+| [0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389](https://sepolia.basescan.org/tx/0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389) | [0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d](https://lasna.reactscan.net/tx/0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d) | [0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a](https://sepolia.basescan.org/tx/0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a) | 2,000 ms |
 
 | Run field | Value |
 | --- | --- |
@@ -216,8 +217,8 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | --- | --- |
 | Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
 | README with track, architecture, addresses, hashes, full-loop latency | Pass: live addresses, hashes, and 2,000 ms recorded |
-| Demo video under 3 minutes | FAIL: not recorded; exact script in `DEMO.md` |
-| DoraHacks submission complete | FAIL: video missing; not uploaded |
+| Demo video under 3 minutes | PASS: [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, captioned |
+| DoraHacks submission complete | FAIL: video ready; DoraHacks upload not done |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
 | Live frontend URL | Pass: https://nassami1.github.io/omnistop/ |

@@ -1,12 +1,14 @@
 # OmniStop demo video script
 
-Target: under 3 minutes, one take, no editing required. The video is still missing; this file is the exact recording plan.
+Target: under 3 minutes, one take, no editing required.
 
-## Pre-open tabs
+The produced captioned walkthrough is [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, 1920x1080, silent with captions. Use this script if you want to re-record it with a voice.
+
+## Pre-open tabs for a voiced re-record
 
 1. Live site: https://nassami1.github.io/omnistop/
 2. Origin tx: https://sepolia.basescan.org/tx/0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389
-3. Reactive tx: https://reactscan.net/tx/0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d
+3. Reactive tx: https://lasna.reactscan.net/tx/0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d
 4. Callback tx: https://sepolia.basescan.org/tx/0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a
 5. README evidence: https://github.com/Nassami1/omnistop#full-loop-evidence
 6. Contracts section: https://nassami1.github.io/omnistop/#contracts

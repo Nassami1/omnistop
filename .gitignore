@@ -9,3 +9,4 @@ lib/
 .DS_Store
 .npm-cache/
 .tmp-vercel/
+.tmp-video/

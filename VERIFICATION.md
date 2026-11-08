@@ -68,14 +68,14 @@ Evidence: `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`.
 | Box | Result | Evidence |
 | --- | --- | --- |
 | Public repo, open source, built during event | PASS | https://github.com/Nassami1/omnistop, `LICENSE`, commits dated 2026-11-08 |
-| README with track, architecture, addresses, hashes, full-loop latency | PASS | `README.md:1`, `README.md:64`, `README.md:70` |
-| Deployed addresses and 3 hashes | PASS | `README.md:53`, `README.md:54`, `README.md:55`, `README.md:70` |
-| Full-loop latency number | PASS | `README.md:70`, `frontend/app.js:12`, live site run ledger |
-| Demo video under 3 minutes | FAIL | No video file. Exact one-take script and commands in `DEMO.md` |
+| README with track, architecture, addresses, hashes, full-loop latency | PASS | `README.md` "Status" and "Full-loop evidence" |
+| Deployed addresses and 3 hashes | PASS | `README.md` "Deployed addresses" and "Full-loop evidence" |
+| Full-loop latency number | PASS | `README.md` "Full-loop evidence", `frontend/app.js` `DEPLOYED`, live site run ledger |
+| Demo video under 3 minutes | PASS | `demo/omnistop-demo.mp4`, 2:06, 1920x1080, captioned; script in `DEMO.md` |
 | Timestamps only, no block.number | PASS | grep output is empty; `contracts/OmniStopReactive.sol:70`, `contracts/OmniStopExecutor.sol:35` |
 | Lasna reactive, testnet only | PASS | Reactive address on Lasna 5318007; callback proxy `0x476F44...`; no mainnet constants |
 | Dim navy frontend, logo, docs | PASS | `frontend/styles.css:5`, `frontend/index.html:18`, `frontend/index.html:204`, live site |
 | No `.env` or key committed | PASS | `.gitignore:1`, `git ls-files` output empty, secret history scan 0 |
-| DoraHacks submission complete | FAIL | Video is missing; no DoraHacks upload |
+| DoraHacks submission complete | FAIL | Video is ready; DoraHacks upload not done |
 
-**Phase 4 is not complete.** The only missing hard requirement is the demo video. The DoraHacks submission cannot be marked done without it.
+**Phase 4 is complete on the repository side.** The video requirement is met by `demo/omnistop-demo.mp4`. The only remaining step is the DoraHacks upload, which needs the owner account. The submission is not marked done until that upload exists.
