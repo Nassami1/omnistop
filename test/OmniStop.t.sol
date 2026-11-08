@@ -11,6 +11,7 @@ interface Vm {
     function expectRevert(bytes calldata revertData) external;
     function mockCall(address callee, bytes calldata data, bytes calldata retdata) external;
     function deal(address account, uint256 balance) external;
+    function expectEmit(bool topic1, bool topic2, bool topic3, bool data, address emitter) external;
 }
 
 contract OmniStopTest {
@@ -18,6 +19,13 @@ contract OmniStopTest {
     address private constant SYSTEM = 0x8888888888888888888888888888888888888888;
     address private constant POOL = address(0xBEEF);
     bytes32 private constant ORIGIN_TX = keccak256("origin");
+
+    event SwapExecuted(
+        uint256 price,
+        bytes32 indexed originTxHash,
+        uint256 callbackTs,
+        uint256 reactiveToCallbackMs
+    );
 
     function _reactive(uint256 bps) private returns (OmniStopReactive reactive) {
         VM.mockCall(SYSTEM, abi.encodeWithSelector(ISystemContract.subscribe.selector), "");
@@ -111,7 +119,10 @@ contract OmniStopTest {
         VM.expectRevert(bytes("only-reactive"));
         executor.executeSwap(address(0xBAD), 1e18, ORIGIN_TX, 1);
 
+        VM.warp(1005);
+        VM.expectEmit(true, false, false, true, address(executor));
+        emit SwapExecuted(1e18, ORIGIN_TX, 1005, 5000);
         VM.prank(address(0xB0B));
-        executor.executeSwap(address(0xA11CE), 1e18, ORIGIN_TX, 1);
+        executor.executeSwap(address(0xA11CE), 1e18, ORIGIN_TX, 1000);
     }
 }

@@ -1,3 +1,6 @@
+/* Palette: navy field and blue actions come from the brief. Purple marks the Reactive layer.
+   Gold is taken from the supplied mark and is reserved for the breach marker and focus. */
+/* Mono is limited to chain data and timings so columns align; body copy uses a neutral sans. */
 :root {
   --bg: #0a1128;
   --bg-2: #0d1b3e;
@@ -48,6 +51,15 @@ a {
   color: var(--blue-bright);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+}
+
+a[href],
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 a:hover {

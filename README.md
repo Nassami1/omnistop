@@ -168,6 +168,12 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 - `pay(uint256)` is exposed on both contracts because the system contract and callback proxy collect fees through it. Without it, a contract can receive funds but cannot settle a bill.
 - `swapViaRouter` is a single stub. `executeSwap` records the signal and does not move funds. Do not present this MVP as a live stop order.
 
+## Design notes
+
+- Navy field and blue actions come from the brief. Purple marks the Reactive layer. Gold comes from the supplied mark and is reserved for the threshold breach and focus.
+- Mono is limited to chain data, addresses, and timings, where alignment matters. Body copy uses a neutral sans.
+- The page is built as a ledger: section indices, a threshold gauge, a run table, and a docs index. The three-stage loop is the actual contract path, not a template section.
+
 ## Security
 
 - Testnet only: Lasna 5318007, Base Sepolia 84532, Unichain Sepolia 1301. No mainnet constants.
