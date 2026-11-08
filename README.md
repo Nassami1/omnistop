@@ -22,8 +22,7 @@ python3 -m http.server 8000
 # open http://localhost:8000/frontend/
 ```
 
-Use a testnet key only. Never commit `.env`.
-
+ 
 ## What is here
 
 | Path | Purpose |
@@ -216,19 +215,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 - The executor has no withdrawal path. Funds can only be paid to the callback proxy.
 - The frontend contains no keys.
 
-## Submission checklist
 
-| Item | Status |
-| --- | --- |
-| Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
-| README with track, architecture, addresses, hashes, full-loop latency | Pass: live addresses, hashes, and 2,000 ms recorded |
-| Demo video under 3 minutes | PASS: [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, captioned; live dashboard at https://nassami1.github.io/omnistop/ |
-| DoraHacks submission complete | FAIL: video ready; DoraHacks upload not done |
-| Timestamps only on Base Sepolia | Pass: no block-number math |
-| Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
-| Live frontend URL | Pass: https://nassami1.github.io/omnistop/ |
-| Black and red dashboard, logo, docs section | Pass |
-| No `.env` or private key committed | Pass: no `.env` in tracked files or git history |
 
 ## License
 
