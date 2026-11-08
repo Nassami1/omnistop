@@ -98,7 +98,7 @@
           <span class="stage-index">01</span>
           <p class="stage-label">Origin, Base Sepolia</p>
           <h3>Pool emits <code>Sync</code></h3>
-          <p>A Uniswap V2 pair publishes <code>reserve0</code> and <code>reserve1</code> on every swap. OmniStop subscribes to one pair and one topic.</p>
+          <p>The origin pair publishes <code>reserve0</code> and <code>reserve1</code> on every <code>Sync</code>. OmniStop subscribes to one pair and one topic. Base Sepolia uses a test pair because Uniswap V2 is not officially deployed there.</p>
           <span class="stage-meta">topic0 0x1c411e9a…</span>
         </li>
         <li class="stage stage-core">
@@ -191,7 +191,7 @@
           <span class="contract-link">Run <code>scripts/deploy.sh</code></span>
         </li>
         <li class="contract-row" data-contract="pool">
-          <span class="contract-name">Origin pool<small>Uniswap V2 pair</small></span>
+          <span class="contract-name">Origin pool<small>MockSyncPair, test-only</small></span>
           <code class="contract-address">Pending deployment</code>
           <span class="contract-link">Set <code>POOL_ADDRESS</code></span>
         </li>
@@ -220,7 +220,7 @@
         <div class="docs-body">
           <article id="goal">
             <h3>Goal</h3>
-            <p>Ship a one-pool stop-loss and take-profit MVP on Reactive Lasna that turns a DEX <code>Sync</code> event into an authenticated destination callback, with every leg observable.</p>
+            <p>Ship a one-pool stop-loss and take-profit MVP on Reactive Lasna that turns a pool <code>Sync</code> event into an authenticated destination callback, with every leg observable.</p>
           </article>
 
           <article id="problem">
@@ -237,7 +237,7 @@
           <article id="architecture">
             <h3>Architecture</h3>
             <ol class="flow-list">
-              <li><strong>Base Sepolia pair</strong> emits <code>Sync(uint112 reserve0, uint112 reserve1)</code>.</li>
+              <li><strong>Base Sepolia test pair</strong> emits <code>Sync(uint112 reserve0, uint112 reserve1)</code>.</li>
               <li><strong>OmniStopReactive on Lasna</strong> receives the log, computes the ratio, and calls <code>requestCallbackV_1_0</code> on the system contract.</li>
               <li><strong>CallbackProxy on Base Sepolia</strong> calls <code>executeSwap</code> with the reactive address in the first argument slot.</li>
               <li><strong>OmniStopExecutor</strong> checks <code>msg.sender</code> and the injected address, then emits <code>SwapExecuted</code>.</li>
@@ -258,17 +258,18 @@ breach    if moveBps &gt;= thresholdBps</code></pre>
             <h3>Latency method</h3>
             <p>Three timestamps matter: the origin receipt timestamp on Base Sepolia, the reactive transaction timestamp on Lasna, and the callback receipt timestamp on Base Sepolia. No block-number math is used on Base Sepolia.</p>
             <p>The reactive contract emits <code>LatencyMeasured(originTxHash, reactTs)</code>. The executor emits <code>SwapExecuted(price, originTxHash, callbackTs, reactiveToCallbackMs)</code>. Full-loop latency is <code>callbackTs - originTs</code>, measured after the run from the two receipts with <code>cast</code>.</p>
-            <p class="fine">The current <code>LogRecord</code> ABI has no origin block timestamp. <code>originTs</code> therefore comes from the origin receipt, not from the reactive payload. The on-chain event records the reactive-to-callback leg it can prove.</p>
+            <p class="fine">The current <code>LogRecord</code> ABI has no origin block timestamp. <code>originTs</code> therefore comes from the origin receipt, not from the reactive payload. The on-chain event records the reactive-to-callback leg it can prove. Cross-chain clock skew can make that leg larger than the same-chain full loop.</p>
           </article>
 
           <article id="risks">
             <h3>Risks</h3>
             <ul class="risk-list">
-              <li><strong>Testnet liquidity.</strong> Base Sepolia pools are thin. A swap large enough to cross 50 bps may not exist; pick a pool with real testnet liquidity or lower the threshold.</li>
+              <li><strong>Test pair, not live liquidity.</strong> Base Sepolia has no official Uniswap V2 deployment, so the live run uses <code>MockSyncPair</code>. The Reactive path is real; the liquidity is simulated. Wire a real pair for production.</li>
               <li><strong>Reserve ratio is not a TWAP.</strong> One large swap can trigger or manipulate it. This is a signal MVP, not an oracle.</li>
               <li><strong>Callback gas.</strong> The proxy withholds gas for accounting. A failing callback still bills the executor. Fund the executor with destination ETH and raise <code>gasLimit</code> if needed.</li>
               <li><strong>Reactive fees.</strong> The Lasna contract needs REACT. A contract in debt receives no events.</li>
               <li><strong>No swap yet.</strong> <code>executeSwap</code> records the signal; <code>swapViaRouter</code> is a stub. Do not present this as a live stop order.</li>
+              <li><strong>Cross-chain clock skew.</strong> Lasna and Base timestamps can differ by a second. Full-loop latency uses only Base timestamps; the on-chain reactive leg can read higher than the full loop.</li>
             </ul>
           </article>
 
@@ -282,10 +283,11 @@ breach    if moveBps &gt;= thresholdBps</code></pre>
                 </thead>
                 <tbody>
                   <tr><td>Public repo, open source, MIT</td><td>Pass, public on GitHub</td></tr>
-                  <tr><td>README with track, architecture, addresses, hashes, full-loop latency</td><td>Architecture ready; addresses and hashes pending a funded run</td></tr>
+                  <tr><td>README with track, architecture, addresses, hashes, full-loop latency</td><td>Pass, recorded on this page</td></tr>
+                  <tr><td>Full-loop latency measured across origin, reactive, and callback</td><td>2,000 ms</td></tr>
                   <tr><td>Demo video under 3 minutes</td><td>Pending</td></tr>
                   <tr><td>Timestamps only on Base Sepolia</td><td>Yes</td></tr>
-                  <tr><td>Lasna reactive contract, testnet origins and destinations only</td><td>Yes</td></tr>
+                  <tr><td>Lasna reactive contract, testnet origins and destinations only</td><td>Pass, live on Lasna</td></tr>
                   <tr><td>Dim navy frontend, logo, docs section</td><td>Yes</td></tr>
                   <tr><td>No <code>.env</code> or private key committed</td><td>Pass, no .env in git</td></tr>
                 </tbody>

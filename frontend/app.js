@@ -3,14 +3,14 @@
 const DEPLOYED = {
   chainId: 84532,
   thresholdBps: 50,
-  reactive: "",
-  executor: "",
-  pool: "",
-  originTx: "",
-  reactiveTx: "",
-  callbackTx: "",
-  fullLoopMs: null,
-  measuredAt: ""
+  reactive: "0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348",
+  executor: "0xd666DCE5C51c36D24c513AE98767229FC3fbAa40",
+  pool: "0x77B728A427a331485e0B20D4cfE0ce7346D9DA83",
+  originTx: "0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389",
+  reactiveTx: "0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d",
+  callbackTx: "0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a",
+  fullLoopMs: 2000,
+  measuredAt: "2026-11-08T10:35:28Z"
 };
 
 const ADDRESS_RE = /^0x[a-fA-F0-9]{40}$/;

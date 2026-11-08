@@ -4,7 +4,7 @@ Reactive stop-loss and take-profit for a Uniswap V2 pool, built for the **Reacti
 
 A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio with the last breached price. A breach requests an authenticated callback on Base Sepolia, and the executor records the signal.
 
-**Status:** contracts, tests, frontend, deploy scripts, and docs are complete. The live Lasna run is pending a funded testnet deployer key. No address, transaction hash, or latency number is invented in this repository.
+**Status:** live on Base Sepolia and Lasna. The full loop is recorded below. The demo video and DoraHacks submission are still pending.
 
 ## What is here
 
@@ -14,6 +14,7 @@ A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio wit
 | `contracts/OmniStopExecutor.sol` | Destination contract: proxy and reactive checks, signal log |
 | `contracts/ISystemContract.sol` | Minimal system and `LogRecord` interface |
 | `test/OmniStop.t.sol` | Foundry tests for auth, threshold, payment hooks |
+| `test/MockSyncPair.sol` | Test-only origin that emits the Uniswap V2 `Sync` shape |
 | `frontend/` | Vanilla HTML, CSS, JS evidence page |
 | `scripts/deploy.sh` | Reactive first, executor second, attach executor |
 | `scripts/trigger-move.sh` | Swap, wait for both transactions, measure the full loop |
@@ -37,15 +38,17 @@ Base Sepolia 84532                          Lasna 5318007                       
 
 The MVP keeps the pool and the executor on the same testnet. `destChainId` is therefore also the chain used for the subscription. A cross-chain executor would need a separate origin chain id.
 
+Base Sepolia has no official Uniswap V2 deployment. The live run uses `MockSyncPair`, which emits the same `Sync(uint112,uint112)` event. The Reactive and callback path is identical to a real V2 pair. The pair address is `0x77B728A427a331485e0B20D4cfE0ce7346D9DA83`.
+
 ## Deployed addresses
 
-No live deployment is recorded yet.
+Live on Base Sepolia and Lasna.
 
 | Contract | Chain | Address |
 | --- | --- | --- |
-| OmniStopReactive | Lasna 5318007 | Pending |
-| OmniStopExecutor | Base Sepolia 84532 | Pending |
-| Origin pool | Base Sepolia 84532 | Pending |
+| OmniStopReactive | Lasna 5318007 | [0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348](https://reactscan.net/address/0x82d75EFbCA8e086565cB2CCEb270B0625dE6b348) |
+| OmniStopExecutor | Base Sepolia 84532 | [0xd666DCE5C51c36D24c513AE98767229FC3fbAa40](https://sepolia.basescan.org/address/0xd666DCE5C51c36D24c513AE98767229FC3fbAa40) |
+| Origin pool, MockSyncPair | Base Sepolia 84532 | [0x77B728A427a331485e0B20D4cfE0ce7346D9DA83](https://sepolia.basescan.org/address/0x77B728A427a331485e0B20D4cfE0ce7346D9DA83) |
 
 Callback proxies (fixed protocol constants):
 
@@ -56,13 +59,22 @@ Callback proxies (fixed protocol constants):
 
 ## Full-loop evidence
 
-The table is intentionally empty until the funded run exists. The frontend reads the same values from `frontend/app.js`.
+Recorded on 2026-11-08. The frontend reads the same values from `frontend/app.js`.
 
 | Origin tx | Reactive tx | Callback tx | Full-loop ms |
 | --- | --- | --- | --- |
-| Not measured | Not measured | Not measured | Not measured |
+| [0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389](https://sepolia.basescan.org/tx/0xee337905c0af4ab06e51df3dcf5d9c70cc3ac57956f83b542da6219e24b36389) | [0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d](https://reactscan.net/tx/0x4eb6803b85a84d1f01b033e8438ab8bb733c2fc6f290cf9d9be7b4a50a05398d) | [0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a](https://sepolia.basescan.org/tx/0x09f1b1c36954c1185d162283d999db7a3e613c5534b6c57c25c3d10e37e1bf9a) | 2,000 ms |
 
-A full loop is the origin receipt timestamp to the callback receipt timestamp. On-chain, the executor also records the reactive-to-callback leg. See [Latency method](#latency-method).
+| Run field | Value |
+| --- | --- |
+| Origin block | 56061286, timestamp 1794134126 |
+| Reactive block | 7832528, timestamp 1794134125 |
+| Callback block | 56061296, timestamp 1794134128 |
+| Gas used | 28,353 / 93,743 / 73,700 |
+| On-chain reactive leg | 3,000 ms, from the `SwapExecuted` event |
+| Price at breach | 2.2e18, a 10 percent move from the 2.0e18 baseline |
+
+A full loop is the origin receipt timestamp to the callback receipt timestamp. On-chain, the executor also records the reactive-to-callback leg. Lasna's timestamp was one second behind Base in this run, so the on-chain leg reads 3,000 ms while the same-chain full loop is 2,000 ms. See [Latency method](#latency-method).
 
 ## Build and test
 
@@ -129,6 +141,14 @@ Then run the loop:
 
 The script performs the swap, waits for `ThresholdBreach` on Lasna and `SwapExecuted` on the destination, then prints the three hashes, the full-loop milliseconds, and a snippet for `frontend/app.js`.
 
+For the live Base Sepolia test pair, the two origin events were emitted with `setReserves` instead of a router swap:
+
+```sh
+cast send $POOL_ADDRESS "setReserves(uint112,uint112)" 100000000000000000000 200000000000000000000 --rpc-url $ORIGIN_RPC_BASE_SEPOLIA --private-key $DEPLOYER_PRIVATE_KEY
+# wait until lastPrice() on OmniStopReactive is 2e18
+cast send $POOL_ADDRESS "setReserves(uint112,uint112)" 100000000000000000000 220000000000000000000 --rpc-url $ORIGIN_RPC_BASE_SEPOLIA --private-key $DEPLOYER_PRIVATE_KEY
+```
+
 ## Threshold math
 
 ```text
@@ -159,6 +179,8 @@ fullLoopMs = (callbackTs - originTs) * 1000
 
 No block-number math is used on Base Sepolia. Block timestamps are second-granular, so millisecond values are second differences multiplied by 1000. This is a real constraint of EVM timestamps, not a precision claim.
 
+Lasna and Base clocks are independent. In the recorded run Lasna was one second behind Base, so the on-chain leg is 3,000 ms and the same-chain full loop is 2,000 ms. The full-loop number is the one in the evidence table.
+
 The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in the Reactive docs and `reactive-lib-omni` does not expose it. This repository follows the live ABI.
 
 ## Interface notes
@@ -167,6 +189,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 - The callback payload reserves its first argument for the proxy-injected reactive address: `executeSwap(address,uint256,bytes32,uint256)`. The proxy replaces the placeholder. The executor checks both the proxy and the reactive signer.
 - `pay(uint256)` is exposed on both contracts because the system contract and callback proxy collect fees through it. Without it, a contract can receive funds but cannot settle a bill.
 - `swapViaRouter` is a single stub. `executeSwap` records the signal and does not move funds. Do not present this MVP as a live stop order.
+- The `Sync` topic is the canonical `keccak256("Sync(uint112,uint112)")`, `0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1`. An earlier value in the project did not match the ABI; the canonical hash is used so subscriptions fire.
 
 ## Design notes
 
@@ -188,10 +211,10 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | Item | Status |
 | --- | --- |
 | Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
-| README with track, architecture, addresses, hashes, full-loop latency | Architecture and method ready; addresses and hashes pending a funded run |
+| README with track, architecture, addresses, hashes, full-loop latency | Pass: live addresses, hashes, and 2,000 ms recorded |
 | Demo video under 3 minutes | Pending |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
-| Lasna reactive contract, testnet only | Pass by code and config; deployment pending |
+| Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
 | Dim navy frontend, logo, docs section | Pass |
 | No `.env` or private key committed | Pass: no `.env` in tracked files or git history |
 
