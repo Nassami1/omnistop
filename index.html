@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a1128">
+  <meta name="description" content="OmniStop turns a Uniswap V2 Sync event into an authenticated Reactive callback on Base Sepolia and Lasna.">
+  <title>OmniStop | Reactive stop-loss, measured</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <noscript><p class="noscript-note">Run data is rendered by app.js. The same addresses and hashes are in README.md.</p></noscript>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="OmniStop home">
+        <img src="assets/logo.png" alt="" width="493" height="348">
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#latency">Demo</a>
+        <a href="#docs">Docs</a>
+        <a href="#contracts">Contracts</a>
+      </nav>
+      <span class="track-badge">Every Second Counts</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <div class="hero-copy">
+        <p class="kicker">Reactive Omni Buildathon, Lasna</p>
+        <h1>OmniStop<span class="brand-dot" aria-hidden="true">.</span></h1>
+        <p class="lede">A stop-loss that reads a DEX pool directly. One <code>Sync</code> event on Base Sepolia, one threshold check on Lasna, one authenticated callback. No keeper, no polling, no price feed.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#latency">View Demo</a>
+          <a class="btn btn-ghost" href="#docs">Read Docs</a>
+        </div>
+        <dl class="hero-facts">
+          <div>
+            <dt>Origin</dt>
+            <dd>Base Sepolia</dd>
+          </div>
+          <div>
+            <dt>Reactor</dt>
+            <dd>Lasna 5318007</dd>
+          </div>
+          <div>
+            <dt>Callback</dt>
+            <dd>Proxy-authenticated</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="rule-card" aria-labelledby="rule-title">
+        <div class="rule-top">
+          <span class="mono-label" id="rule-title">Threshold rule</span>
+          <span class="mono-label" id="threshold-note">50 bps demo</span>
+        </div>
+        <p class="formula">
+          <span>|p - p<sub>0</sub>| / p<sub>0</sub></span>
+          <span class="formula-op" aria-hidden="true">≥</span>
+          <span class="formula-threshold" id="threshold-label">50 bps</span>
+        </p>
+        <div class="rail" aria-hidden="true">
+          <span class="rail-base"></span>
+          <span class="rail-zone"></span>
+          <span class="rail-tick"></span>
+        </div>
+        <div class="rail-labels" aria-hidden="true">
+          <span>baseline p<sub>0</sub></span>
+          <span>breach zone</span>
+        </div>
+        <p class="rule-note">The first <code>Sync</code> sets the baseline. A breach moves it. A drift inside the band does not.</p>
+        <div class="mini-loop">
+          <span>Sync</span>
+          <span class="mini-arrow" aria-hidden="true">→</span>
+          <span>react</span>
+          <span class="mini-arrow" aria-hidden="true">→</span>
+          <span>callback</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="how">
+      <div class="section-head">
+        <p class="section-index">01</p>
+        <div>
+          <h2>The loop</h2>
+          <p class="section-intro">The pool publishes reserves. Lasna decides. The destination records. Every step is a separate transaction with its own timestamp.</p>
+        </div>
+      </div>
+
+      <ol class="stages">
+        <li class="stage">
+          <span class="stage-index">01</span>
+          <p class="stage-label">Origin, Base Sepolia</p>
+          <h3>Pool emits <code>Sync</code></h3>
+          <p>The origin pair publishes <code>reserve0</code> and <code>reserve1</code> on every <code>Sync</code>. OmniStop subscribes to one pair and one topic. Base Sepolia uses a test pair because Uniswap V2 is not officially deployed there.</p>
+          <span class="stage-meta">topic0 0x1c411e9a…</span>
+        </li>
+        <li class="stage stage-core">
+          <span class="stage-index">02</span>
+          <p class="stage-label">Reactive, Lasna 5318007</p>
+          <h3>Threshold check</h3>
+          <p>The reactive contract decodes the reserves, computes <code>reserve1 / reserve0</code>, and compares the move with the last breached price.</p>
+          <span class="stage-meta">1 pool, 1 threshold</span>
+        </li>
+        <li class="stage">
+          <span class="stage-index">03</span>
+          <p class="stage-label">Destination, Base Sepolia</p>
+          <h3>Proxy calls executor</h3>
+          <p>The callback proxy injects the reactive address. The executor checks the proxy and the signer, then records the price and origin tx.</p>
+          <span class="stage-meta">gasLimit 1,000,000</span>
+        </li>
+      </ol>
+
+      <p class="section-footnote">Deployment order: reactive first, executor second, then <code>setExecutor</code>. The executor signer is immutable.</p>
+    </section>
+
+    <section class="section wrap" id="latency">
+      <div class="section-head">
+        <p class="section-index">02</p>
+        <div>
+          <h2>Run ledger</h2>
+          <p class="section-intro">One row per full loop. The millisecond value is the callback receipt timestamp minus the origin receipt timestamp, not a single leg.</p>
+        </div>
+      </div>
+
+      <div class="ledger-grid">
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Full-loop latency evidence for the latest OmniStop run</caption>
+            <thead>
+              <tr>
+                <th scope="col">Origin tx</th>
+                <th scope="col">Reactive tx</th>
+                <th scope="col">Callback tx</th>
+                <th scope="col">Full-loop ms</th>
+              </tr>
+            </thead>
+            <tbody id="latency-body">
+              <tr class="empty-row">
+                <td colspan="4">
+                  <strong>Loading recorded run.</strong>
+                  <span>If this message stays, JavaScript is disabled. The same evidence is in <code>README.md</code>.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="ledger-notes" aria-label="Run status">
+          <div class="note">
+            <span class="note-label">Status</span>
+            <strong id="run-status">Loading recorded run</strong>
+          </div>
+          <div class="note">
+            <span class="note-label">On-chain leg</span>
+            <p><code>reactTs</code> to <code>callbackTs</code>, emitted as <code>reactiveToCallbackMs</code>.</p>
+          </div>
+          <div class="note">
+            <span class="note-label">Full loop</span>
+            <p>Origin receipt to callback receipt, computed off-chain with <code>cast</code>.</p>
+          </div>
+          <p class="fine">Values come from <code>DEPLOYED</code> in <code>frontend/app.js</code>. No hash or latency is invented.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section wrap" id="contracts">
+      <div class="section-head">
+        <p class="section-index">03</p>
+        <div>
+          <h2>Contracts</h2>
+          <p class="section-intro">Three addresses, two chains, one callback path. The callback proxy is fixed per destination chain.</p>
+        </div>
+      </div>
+
+      <ul class="contract-list" id="contract-list">
+        <li class="contract-row" data-contract="reactive">
+          <span class="contract-name">Reactive<small>Lasna 5318007</small></span>
+          <code class="contract-address">Loading address</code>
+          <span class="contract-link">From <code>app.js</code></span>
+        </li>
+        <li class="contract-row" data-contract="executor">
+          <span class="contract-name">Executor<small>Base Sepolia 84532</small></span>
+          <code class="contract-address">Loading address</code>
+          <span class="contract-link">From <code>app.js</code></span>
+        </li>
+        <li class="contract-row" data-contract="pool">
+          <span class="contract-name">Origin pool<small>MockSyncPair, test-only</small></span>
+          <code class="contract-address">Loading address</code>
+          <span class="contract-link">From <code>app.js</code></span>
+        </li>
+      </ul>
+
+      <p class="section-footnote">Base Sepolia callback proxy <code>0x476F44b11F5C942c58f4c8E3d0300E5710743585</code>. Unichain Sepolia proxy <code>0x775c9B990ADe401060B78D0e98684eEf8d2466C1</code>.</p>
+    </section>
+
+    <section class="section wrap" id="docs">
+      <div class="docs-layout">
+        <aside class="docs-side">
+          <p class="section-index">04</p>
+          <h2>Docs</h2>
+          <nav class="docs-toc" aria-label="Docs sections">
+            <a href="#goal">Goal</a>
+            <a href="#problem">Problem</a>
+            <a href="#solution">Solution</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#threshold-math">Threshold math</a>
+            <a href="#latency-method">Latency method</a>
+            <a href="#risks">Risks</a>
+            <a href="#checklist">Submission checklist</a>
+          </nav>
+        </aside>
+
+        <div class="docs-body">
+          <article id="goal">
+            <h3>Goal</h3>
+            <p>Ship a one-pool stop-loss and take-profit MVP on Reactive Lasna that turns a pool <code>Sync</code> event into an authenticated destination callback, with every leg observable.</p>
+          </article>
+
+          <article id="problem">
+            <h3>Problem</h3>
+            <p>A stop-loss normally needs a bot to poll prices, decide, and send a transaction. That adds a server to trust and a polling interval to lose. The pool already publishes its reserves on every swap, so the signal is already in the log.</p>
+          </article>
+
+          <article id="solution">
+            <h3>Solution</h3>
+            <p>Subscribe to the pair's <code>Sync</code> event from a reactive contract on Lasna. Decode <code>reserve0</code> and <code>reserve1</code>, compute the reserve ratio, and compare it with the last breached ratio. When the move is at or past <code>thresholdBps</code>, request a callback to <code>OmniStopExecutor</code>.</p>
+            <p>The callback proxy injects the reactive address. The executor accepts only the configured proxy and reactive signer, so a direct caller cannot forge a fill.</p>
+          </article>
+
+          <article id="architecture">
+            <h3>Architecture</h3>
+            <ol class="flow-list">
+              <li><strong>Base Sepolia test pair</strong> emits <code>Sync(uint112 reserve0, uint112 reserve1)</code>.</li>
+              <li><strong>OmniStopReactive on Lasna</strong> receives the log, computes the ratio, and calls <code>requestCallbackV_1_0</code> on the system contract.</li>
+              <li><strong>CallbackProxy on Base Sepolia</strong> calls <code>executeSwap</code> with the reactive address in the first argument slot.</li>
+              <li><strong>OmniStopExecutor</strong> checks <code>msg.sender</code> and the injected address, then emits <code>SwapExecuted</code>.</li>
+            </ol>
+            <p class="fine">Deployment order is reactive, executor, then <code>setExecutor</code>, because the executor pins the reactive address at construction.</p>
+          </article>
+
+          <article id="threshold-math">
+            <h3>Threshold math</h3>
+            <pre><code>price     = reserve1 * 1e18 / reserve0
+moveBps   = abs(price - lastPrice) * 10000 / lastPrice
+breach    if moveBps &gt;= thresholdBps</code></pre>
+            <p>The first <code>Sync</code> writes the baseline and returns. A breach writes the new baseline. A move inside the band leaves <code>lastPrice</code> alone, so a slow drift does not reset the stop.</p>
+            <p>The contract compares <code>delta * 10000 &gt;= lastPrice * thresholdBps</code> to avoid an extra division. Integer math rounds down on both sides.</p>
+          </article>
+
+          <article id="latency-method">
+            <h3>Latency method</h3>
+            <p>Three timestamps matter: the origin receipt timestamp on Base Sepolia, the reactive transaction timestamp on Lasna, and the callback receipt timestamp on Base Sepolia. No block-number math is used on Base Sepolia.</p>
+            <p>The reactive contract emits <code>LatencyMeasured(originTxHash, reactTs)</code>. The executor emits <code>SwapExecuted(price, originTxHash, callbackTs, reactiveToCallbackMs)</code>. Full-loop latency is <code>callbackTs - originTs</code>, measured after the run from the two receipts with <code>cast</code>.</p>
+            <p class="fine">The current <code>LogRecord</code> ABI has no origin block timestamp. <code>originTs</code> therefore comes from the origin receipt, not from the reactive payload. The on-chain event records the reactive-to-callback leg it can prove. Cross-chain clock skew can make that leg larger than the same-chain full loop.</p>
+          </article>
+
+          <article id="risks">
+            <h3>Risks</h3>
+            <ul class="risk-list">
+              <li><strong>Test pair, not live liquidity.</strong> Base Sepolia has no official Uniswap V2 deployment, so the live run uses <code>MockSyncPair</code>. The Reactive path is real; the liquidity is simulated. Wire a real pair for production.</li>
+              <li><strong>Reserve ratio is not a TWAP.</strong> One large swap can trigger or manipulate it. This is a signal MVP, not an oracle.</li>
+              <li><strong>Callback gas.</strong> The proxy withholds gas for accounting. A failing callback still bills the executor. Fund the executor with destination ETH and raise <code>gasLimit</code> if needed.</li>
+              <li><strong>Reactive fees.</strong> The Lasna contract needs REACT. A contract in debt receives no events.</li>
+              <li><strong>No swap yet.</strong> <code>executeSwap</code> records the signal; <code>swapViaRouter</code> is a stub. Do not present this as a live stop order.</li>
+              <li><strong>Cross-chain clock skew.</strong> Lasna and Base timestamps can differ by a second. Full-loop latency uses only Base timestamps; the on-chain reactive leg can read higher than the full loop.</li>
+            </ul>
+          </article>
+
+          <article id="checklist">
+            <h3>DoraHacks submission checklist</h3>
+            <div class="table-wrap checklist-wrap">
+              <table>
+                <caption class="sr-only">DoraHacks submission checklist status</caption>
+                <thead>
+                  <tr><th scope="col">Item</th><th scope="col">Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Public repo, open source, MIT</td><td>Pass, public on GitHub</td></tr>
+                  <tr><td>README with track, architecture, addresses, hashes, full-loop latency</td><td>Pass, recorded on this page</td></tr>
+                  <tr><td>Full-loop latency measured across origin, reactive, and callback</td><td>2,000 ms</td></tr>
+                  <tr><td>Demo video under 3 minutes</td><td>Pending</td></tr>
+                  <tr><td>Timestamps only on Base Sepolia</td><td>Yes</td></tr>
+                  <tr><td>Lasna reactive contract, testnet origins and destinations only</td><td>Pass, live on Lasna</td></tr>
+                  <tr><td>Dim navy frontend, logo, docs section</td><td>Yes</td></tr>
+                  <tr><td>No <code>.env</code> or private key committed</td><td>Pass, no .env in git</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="fine">Runbook: copy <code>.env.example</code> to <code>.env</code>, fill the key and pool, fund the Lasna contract with REACT and the executor with Base Sepolia ETH, then run <code>scripts/deploy.sh</code> and <code>scripts/trigger-move.sh</code>. Paste the three hashes and full-loop milliseconds into <code>frontend/app.js</code>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>OmniStop. Testnet only. <span id="year">2026</span>.</p>
+      <nav aria-label="Project links">
+        <a href="https://dorahacks.io/hackathon/reactive-omni-buildathon">DoraHacks</a>
+        <a href="https://dev.reactive.network/">Reactive docs</a>
+        <a href="https://github.com/Nassami1/omnistop">Source</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
