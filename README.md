@@ -6,6 +6,8 @@ A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio wit
 
 **Status:** live on Base Sepolia and Lasna. The full loop is recorded below. The demo video and DoraHacks submission are still pending.
 
+**Live site:** [https://nassami1.github.io/omnistop/](https://nassami1.github.io/omnistop/)
+
 ## What is here
 
 | Path | Purpose |
@@ -215,6 +217,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | Demo video under 3 minutes | Pending |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
+| Live frontend URL | Pass: https://nassami1.github.io/omnistop/ |
 | Dim navy frontend, logo, docs section | Pass |
 | No `.env` or private key committed | Pass: no `.env` in tracked files or git history |
 
