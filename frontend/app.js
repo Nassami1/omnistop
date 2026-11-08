@@ -1,4 +1,4 @@
-// Paste the three hashes and the measured full-loop value after scripts/trigger-move.sh.
+// Live Base Sepolia run recorded 2026-11-08. Replace these values after a new run.
 // No keys or secrets belong in this file.
 const DEPLOYED = {
   chainId: 84532,
