@@ -44,7 +44,7 @@ contract OmniStopTest {
     {
         record.chainId = 84532;
         record.contractAddress = POOL;
-        record.topic0 = 0x1c411e9a96e071cae2fbf1f0e5955f0aa9583338d8bf65c42d314cbecbee956;
+        record.topic0 = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1;
         record.data = abi.encode(reserve0, reserve1);
         record.txHash = uint256(ORIGIN_TX);
     }

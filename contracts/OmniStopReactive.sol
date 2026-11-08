@@ -11,7 +11,7 @@ contract OmniStopReactive {
     uint256 public constant REACTIVE_IGNORE =
         0xa65f96fc951c35ead38878e0f0b7a3c744a6f5ccc1476b313353ce31712313ad;
     uint256 public constant SYNC_TOPIC0 =
-        0x1c411e9a96e071cae2fbf1f0e5955f0aa9583338d8bf65c42d314cbecbee956;
+        0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1;
     uint256 private constant BPS = 10_000;
     uint64 private constant CALLBACK_GAS_LIMIT = 1_000_000;
 
