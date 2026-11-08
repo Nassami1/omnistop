@@ -222,7 +222,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | --- | --- |
 | Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
 | README with track, architecture, addresses, hashes, full-loop latency | Pass: live addresses, hashes, and 2,000 ms recorded |
-| Demo video under 3 minutes | PASS: [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, captioned; same table at https://nassami1.github.io/omnistop/ |
+| Demo video under 3 minutes | PASS: [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, captioned; live dashboard at https://nassami1.github.io/omnistop/ |
 | DoraHacks submission complete | FAIL: video ready; DoraHacks upload not done |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
