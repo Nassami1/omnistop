@@ -1,0 +1,9 @@
+.env
+out/
+cache/
+broadcast/
+deployments/
+.tmp-check/
+lib/
+.forge/
+.DS_Store
