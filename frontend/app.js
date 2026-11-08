@@ -1,5 +1,6 @@
 // Live Base Sepolia run recorded 2026-11-08. Replace these values after a new run.
 // No keys or secrets belong in this file.
+// Dashboard renders this run locally; no wallet or swap UI by design.
 const DEPLOYED = {
   chainId: 84532,
   thresholdBps: 50,

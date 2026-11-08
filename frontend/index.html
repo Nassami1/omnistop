@@ -145,7 +145,7 @@
             <tbody id="latency-body">
               <tr class="empty-row">
                 <td colspan="4">
-                  <strong>Loading recorded run.</strong>
+                  <strong>Recorded run loads from app.js.</strong>
                   <span>If this message stays, JavaScript is disabled. The same evidence is in <code>README.md</code>.</span>
                 </td>
               </tr>
@@ -158,6 +158,9 @@
             <span class="note-label">Status</span>
             <strong id="run-status">Loading recorded run</strong>
           </div>
+          <noscript>
+            <p class="fine">Recorded 2026-11-08T10:35:28Z: full loop 2,000 ms (origin receipt to callback receipt).</p>
+          </noscript>
           <div class="note">
             <span class="note-label">On-chain leg</span>
             <p><code>reactTs</code> to <code>callbackTs</code>, emitted as <code>reactiveToCallbackMs</code>.</p>
@@ -168,6 +171,15 @@
           </div>
           <p class="fine">Values come from <code>DEPLOYED</code> in <code>frontend/app.js</code>. No hash or latency is invented.</p>
         </aside>
+      </div>
+
+      <div class="demo-video">
+        <h3>Demo video</h3>
+        <video class="demo-video-player" controls preload="none" width="100%">
+          <source src="../demo/omnistop-demo.mp4" type="video/mp4">
+          <p>Your browser cannot play the video. <a href="../demo/omnistop-demo.mp4">Download the MP4</a>.</p>
+        </video>
+        <p class="fine">2:06, captioned. Origin: MockSyncPair. The swap is a stub.</p>
       </div>
     </section>
 
@@ -286,7 +298,7 @@ breach    if moveBps &gt;= thresholdBps</code></pre>
                   <tr><td>Public repo, open source, MIT</td><td>Pass, public on GitHub</td></tr>
                   <tr><td>README with track, architecture, addresses, hashes, full-loop latency</td><td>Pass, recorded on this page</td></tr>
                   <tr><td>Full-loop latency measured across origin, reactive, and callback</td><td>2,000 ms</td></tr>
-                  <tr><td>Demo video under 3 minutes</td><td>Pending</td></tr>
+                  <tr><td>Demo video under 3 minutes</td><td>PASS: <a href="../demo/omnistop-demo.mp4">demo/omnistop-demo.mp4</a>, 2:06, captioned</td></tr>
                   <tr><td>Timestamps only on Base Sepolia</td><td>Yes</td></tr>
                   <tr><td>Lasna reactive contract, testnet origins and destinations only</td><td>Pass, live on Lasna</td></tr>
                   <tr><td>Dim navy frontend, logo, docs section</td><td>Yes</td></tr>

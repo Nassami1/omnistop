@@ -626,6 +626,33 @@ tbody tr:last-child td {
   line-height: 1.6;
 }
 
+/* Demo video */
+.demo-video {
+  margin-top: 44px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(226, 232, 240, 0.12);
+}
+
+.demo-video h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.demo-video .fine {
+  margin: 10px 0 0;
+}
+
+.demo-video-player {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
 /* Contracts */
 .contract-list {
   margin: 0;
