@@ -193,7 +193,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass by code and config; deployment pending |
 | Dim navy frontend, logo, docs section | Pass |
-| No `.env` or private key committed | Verify with `git log --all -p` before submit |
+| No `.env` or private key committed | Pass: no `.env` in tracked files or git history |
 
 ## License
 

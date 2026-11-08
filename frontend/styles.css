@@ -956,6 +956,13 @@ article[id] {
     text-align: left;
   }
 
+  .docs-toc a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+  }
+
   .section-head {
     grid-template-columns: 40px minmax(0, 1fr);
     gap: 16px;
