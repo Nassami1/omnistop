@@ -1,20 +1,17 @@
-/* Palette: navy field and blue actions come from the brief. Purple marks the Reactive layer.
-   Gold is taken from the supplied mark and is reserved for the breach marker and focus. */
+/* Palette: black field and red actions. Red marks the threshold, focus, and state accents. */
 /* Mono is limited to chain data and timings so columns align; body copy uses a neutral sans. */
 :root {
-  --bg: #0a1128;
-  --bg-2: #0d1b3e;
+  --bg: #050505;
+  --bg-2: #0f0707;
   --surface: rgba(255, 255, 255, 0.04);
-  --surface-strong: rgba(139, 92, 246, 0.08);
-  --border: rgba(139, 92, 246, 0.25);
-  --border-strong: rgba(139, 92, 246, 0.5);
-  --text: #e2e8f0;
-  --muted: #94a3b8;
-  --blue: #3b82f6;
-  --blue-bright: #60a5fa;
-  --purple: #8b5cf6;
-  --gold: #c9962b;
-  --gold-light: #e8c77a;
+  --surface-strong: rgba(220, 38, 38, 0.08);
+  --border: rgba(220, 38, 38, 0.25);
+  --border-strong: rgba(220, 38, 38, 0.5);
+  --text: #f5f5f5;
+  --muted: #a3a3a3;
+  --red: #dc2626;
+  --red-bright: #f87171;
+  --red-deep: #991b1b;
   --radius: 16px;
   --mono: "SFMono-Regular", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
   --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
@@ -48,7 +45,7 @@ button {
 }
 
 a {
-  color: var(--blue-bright);
+  color: var(--red-bright);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
@@ -69,20 +66,20 @@ a:hover {
 code {
   font-family: var(--mono);
   font-size: 0.88em;
-  color: #c7d2fe;
-  background: rgba(139, 92, 246, 0.12);
+  color: #fecaca;
+  background: rgba(220, 38, 38, 0.12);
   padding: 0.12em 0.36em;
   border-radius: 4px;
   overflow-wrap: anywhere;
 }
 
 ::selection {
-  background: var(--purple);
+  background: var(--red);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold-light);
+  outline: 2px solid var(--red-bright);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -90,8 +87,8 @@ code {
 .noscript-note {
   margin: 0;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.25);
-  background: rgba(139, 92, 246, 0.1);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.1);
   color: var(--text);
   font-size: 14px;
   text-align: center;
@@ -115,8 +112,8 @@ code {
   top: -100px;
   left: 16px;
   z-index: 100;
-  background: var(--gold-light);
-  color: #07132d;
+  background: var(--red-bright);
+  color: #050505;
   padding: 12px 16px;
   border-radius: 6px;
   font-weight: 600;
@@ -125,7 +122,7 @@ code {
 
 .skip-link:focus {
   top: 12px;
-  color: #07132d;
+  color: #050505;
 }
 
 .wrap {
@@ -138,8 +135,8 @@ code {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(10, 17, 40, 0.97);
-  border-bottom: 1px solid rgba(139, 92, 246, 0.18);
+  background: rgba(5, 5, 5, 0.97);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.18);
 }
 
 .header-inner {
@@ -180,15 +177,15 @@ code {
 
 .site-nav a:hover {
   color: var(--text);
-  background: rgba(59, 130, 246, 0.12);
+  background: rgba(220, 38, 38, 0.12);
 }
 
 .track-badge {
   flex: 0 0 auto;
   padding: 7px 10px;
-  border: 1px solid rgba(201, 150, 43, 0.42);
+  border: 1px solid rgba(220, 38, 38, 0.42);
   border-radius: 4px;
-  color: var(--gold-light);
+  color: var(--red-bright);
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.02em;
@@ -206,7 +203,7 @@ code {
 
 .kicker {
   margin: 0 0 18px;
-  color: var(--gold-light);
+  color: var(--red-bright);
   font-family: var(--mono);
   font-size: 12px;
 }
@@ -220,7 +217,7 @@ h1 {
 }
 
 .brand-dot {
-  color: var(--gold);
+  color: var(--red);
 }
 
 .lede {
@@ -254,28 +251,28 @@ h1 {
 }
 
 .btn-primary {
-  background: var(--blue);
-  color: #07132d;
+  background: var(--red);
+  color: #fff;
 }
 
 .btn-primary:hover {
-  background: var(--blue-bright);
-  color: #07132d;
+  background: var(--red-deep);
+  color: #fff;
 }
 
 .btn-primary:active {
-  background: #2563eb;
+  background: #7f1d1d;
   color: #fff;
 }
 
 .btn-ghost {
-  border-color: rgba(139, 92, 246, 0.42);
+  border-color: rgba(220, 38, 38, 0.42);
   color: var(--text);
 }
 
 .btn-ghost:hover {
-  border-color: var(--purple);
-  background: rgba(139, 92, 246, 0.1);
+  border-color: var(--red);
+  background: rgba(220, 38, 38, 0.1);
   color: var(--text);
 }
 
@@ -333,12 +330,12 @@ h1 {
 }
 
 .formula-op {
-  color: var(--purple);
+  color: var(--red);
 }
 
 .formula-threshold {
-  color: var(--gold-light);
-  border-bottom: 1px solid rgba(201, 150, 43, 0.5);
+  color: var(--red-bright);
+  border-bottom: 1px solid rgba(248, 113, 113, 0.5);
 }
 
 .rail {
@@ -362,8 +359,8 @@ h1 {
   right: 0;
   width: 34%;
   height: 13px;
-  background: rgba(139, 92, 246, 0.18);
-  border-left: 1px solid var(--purple);
+  background: rgba(220, 38, 38, 0.18);
+  border-left: 1px solid var(--red);
 }
 
 .rail-base {
@@ -372,7 +369,7 @@ h1 {
   left: 18%;
   width: 2px;
   height: 15px;
-  background: var(--blue);
+  background: var(--red-bright);
 }
 
 .rail-tick {
@@ -381,7 +378,7 @@ h1 {
   left: 66%;
   width: 1px;
   height: 21px;
-  background: var(--gold);
+  background: var(--red-bright);
 }
 
 .rail-labels {
@@ -412,7 +409,7 @@ h1 {
 }
 
 .mini-arrow {
-  color: var(--purple);
+  color: var(--red-bright);
 }
 
 /* Sections */
@@ -432,8 +429,8 @@ h1 {
 .section-index {
   margin: 8px 0 0;
   padding-top: 6px;
-  border-top: 1px solid rgba(201, 150, 43, 0.45);
-  color: var(--gold-light);
+  border-top: 1px solid rgba(220, 38, 38, 0.45);
+  color: var(--red-bright);
   font-family: var(--mono);
   font-size: 12px;
 }
@@ -478,7 +475,7 @@ h2 {
   right: 8%;
   left: 8%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.45), transparent);
+  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.45), transparent);
 }
 
 .stage {
@@ -499,7 +496,7 @@ h2 {
 }
 
 .stage-index {
-  color: var(--gold-light);
+  color: var(--red-bright);
   font-family: var(--mono);
   font-size: 11px;
 }
@@ -526,7 +523,7 @@ h2 {
 .stage-meta {
   margin-top: auto;
   padding-top: 20px;
-  color: #a5b4fc;
+  color: #fca5a5;
   font-family: var(--mono);
   font-size: 10px;
   overflow-wrap: anywhere;
@@ -685,7 +682,7 @@ tbody tr:last-child td {
 }
 
 .contract-address {
-  color: #c7d2fe;
+  color: #fecaca;
   font-family: var(--mono);
   font-size: 12px;
   overflow-wrap: anywhere;
@@ -698,7 +695,7 @@ tbody tr:last-child td {
 }
 
 .contract-link a {
-  color: var(--blue-bright);
+  color: var(--red-bright);
 }
 
 /* Docs */
@@ -770,7 +767,7 @@ pre {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.28);
-  color: #c7d2fe;
+  color: #fecaca;
   font-family: var(--mono);
   font-size: 12px;
   line-height: 1.7;
@@ -798,15 +795,6 @@ pre code {
 .flow-list strong,
 .risk-list strong {
   color: var(--text);
-}
-
-.checklist-wrap {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.checklist-wrap td {
-  font-size: 13px;
 }
 
 section[id],
@@ -913,7 +901,7 @@ article[id] {
     width: 100%;
     margin-left: 0;
     padding-top: 4px;
-    border-top: 1px solid rgba(139, 92, 246, 0.14);
+    border-top: 1px solid rgba(220, 38, 38, 0.14);
   }
 
   .track-badge {

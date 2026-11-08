@@ -75,7 +75,7 @@ Evidence: `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`.
 | Demo video under 3 minutes | PASS | `demo/omnistop-demo.mp4`, 2:06, 1920x1080, captioned; script in `DEMO.md` |
 | Timestamps only, no block.number | PASS | grep output is empty; `contracts/OmniStopReactive.sol:70`, `contracts/OmniStopExecutor.sol:35` |
 | Lasna reactive, testnet only | PASS | Reactive address on Lasna 5318007; callback proxy `0x476F44...`; no mainnet constants |
-| Dim navy frontend, logo, docs | PASS | `frontend/styles.css:5`, `frontend/index.html:18`, `frontend/index.html:204`, live site |
+| Black and red dashboard, logo, docs | PASS | `frontend/styles.css:5`, `frontend/index.html:18`, live site |
 | No `.env` or key committed | PASS | `.gitignore:1`, `git ls-files` output empty, secret history scan 0 |
 | DoraHacks submission complete | FAIL | Video is ready; DoraHacks upload not done |
 

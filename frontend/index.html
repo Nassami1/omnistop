@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0a1128">
+  <meta name="theme-color" content="#050505">
   <meta name="description" content="OmniStop turns a Uniswap V2 Sync event into an authenticated Reactive callback on Base Sepolia and Lasna.">
   <title>OmniStop | Reactive stop-loss, measured</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
@@ -34,7 +34,7 @@
       <div class="hero-copy">
         <p class="kicker">Reactive Omni Buildathon, Lasna</p>
         <h1>OmniStop<span class="brand-dot" aria-hidden="true">.</span></h1>
-        <p class="lede">A stop-loss that reads a DEX pool directly. One <code>Sync</code> event on Base Sepolia, one threshold check on Lasna, one authenticated callback. No keeper, no polling, no price feed.</p>
+        <p class="lede">A stop-loss that reads a DEX pool directly. One <code>Sync</code> event on Base Sepolia, one threshold check on Lasna, one authenticated callback.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#latency">View Demo</a>
           <a class="btn btn-ghost" href="#docs">Read Docs</a>
@@ -226,7 +226,6 @@
             <a href="#threshold-math">Threshold math</a>
             <a href="#latency-method">Latency method</a>
             <a href="#risks">Risks</a>
-            <a href="#checklist">Submission checklist</a>
           </nav>
         </aside>
 
@@ -284,29 +283,6 @@ breach    if moveBps &gt;= thresholdBps</code></pre>
               <li><strong>No swap yet.</strong> <code>executeSwap</code> records the signal; <code>swapViaRouter</code> is a stub. Do not present this as a live stop order.</li>
               <li><strong>Cross-chain clock skew.</strong> Lasna and Base timestamps can differ by a second. Full-loop latency uses only Base timestamps; the on-chain reactive leg can read higher than the full loop.</li>
             </ul>
-          </article>
-
-          <article id="checklist">
-            <h3>DoraHacks submission checklist</h3>
-            <div class="table-wrap checklist-wrap">
-              <table>
-                <caption class="sr-only">DoraHacks submission checklist status</caption>
-                <thead>
-                  <tr><th scope="col">Item</th><th scope="col">Status</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>Public repo, open source, MIT</td><td>Pass, public on GitHub</td></tr>
-                  <tr><td>README with track, architecture, addresses, hashes, full-loop latency</td><td>Pass, recorded on this page</td></tr>
-                  <tr><td>Full-loop latency measured across origin, reactive, and callback</td><td>2,000 ms</td></tr>
-                  <tr><td>Demo video under 3 minutes</td><td>PASS: <a href="../demo/omnistop-demo.mp4">demo/omnistop-demo.mp4</a>, 2:06, captioned</td></tr>
-                  <tr><td>Timestamps only on Base Sepolia</td><td>Yes</td></tr>
-                  <tr><td>Lasna reactive contract, testnet origins and destinations only</td><td>Pass, live on Lasna</td></tr>
-                  <tr><td>Dim navy frontend, logo, docs section</td><td>Yes</td></tr>
-                  <tr><td>No <code>.env</code> or private key committed</td><td>Pass, no .env in git</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="fine">Runbook: copy <code>.env.example</code> to <code>.env</code>, fill the key and pool, fund the Lasna contract with REACT and the executor with Base Sepolia ETH, then run <code>scripts/deploy.sh</code> and <code>scripts/trigger-move.sh</code>. Paste the three hashes and full-loop milliseconds into <code>frontend/app.js</code>.</p>
           </article>
         </div>
       </div>

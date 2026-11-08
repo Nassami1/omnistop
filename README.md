@@ -36,7 +36,7 @@ Use a testnet key only. Never commit `.env`.
 | `frontend/` | Vanilla HTML, CSS, JS evidence page |
 | `scripts/deploy.sh` | Reactive first, executor second, attach executor |
 | `scripts/trigger-move.sh` | Swap, wait for both transactions, measure the full loop |
-| `assets/logo.png` | Supplied mark, light wordmark variant for the dark header |
+| `assets/logo.png` | Supplied mark, red symbol and light wordmark variant for the dark header |
 | `demo/omnistop-demo.mp4` | Captioned 2:06 evidence walkthrough |
 
 ## Architecture
@@ -203,7 +203,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 
 ## Design notes
 
-- Navy field and blue actions come from the brief. Purple marks the Reactive layer. Gold comes from the supplied mark and is reserved for the threshold breach and focus.
+- Black field and red actions are the current dashboard direction. Red marks the threshold, focus, and state accents. The supplied mark is rendered in red and light for the dark header.
 - Mono is limited to chain data, addresses, and timings, where alignment matters. Body copy uses a neutral sans.
 - The page is built as a ledger: section indices, a threshold gauge, a run table, and a docs index. The three-stage loop is the actual contract path, not a template section.
 
@@ -227,7 +227,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
 | Live frontend URL | Pass: https://nassami1.github.io/omnistop/ |
-| Dim navy frontend, logo, docs section | Pass |
+| Black and red dashboard, logo, docs section | Pass |
 | No `.env` or private key committed | Pass: no `.env` in tracked files or git history |
 
 ## License
