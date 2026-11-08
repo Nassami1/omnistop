@@ -181,7 +181,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 
 | Item | Status |
 | --- | --- |
-| Public repo, open source, MIT | Ready to publish |
+| Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
 | README with track, architecture, addresses, hashes, full-loop latency | Architecture and method ready; addresses and hashes pending a funded run |
 | Demo video under 3 minutes | Pending |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
