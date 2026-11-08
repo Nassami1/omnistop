@@ -49,8 +49,9 @@ Evidence: `contracts/OmniStopReactive.sol:70` uses `block.timestamp`; `contracts
 
 ## Frontend serve check
 
+Frontend serve check, using the README Quickstart command from the repo root:
+
 ```text
-$ python3 -m http.server 8768 --directory frontend
 title: OmniStop | Reactive stop-loss, measured
 h1: 1
 status: Measured 2026-11-08T10:35:28Z

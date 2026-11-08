@@ -10,6 +10,20 @@ A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio wit
 
 **Verification:** [VERIFICATION.md](VERIFICATION.md). **Demo script:** [DEMO.md](DEMO.md). **Demo video:** [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4).
 
+## Quickstart (local dashboard, 2 minutes)
+
+Prerequisites: `git` and `python3` for the dashboard. Foundry `forge` and `cast` are only needed to build or re-run (`forge build`, `forge test`, `./scripts/deploy.sh`, `./scripts/trigger-move.sh`).
+
+```sh
+git clone https://github.com/Nassami1/omnistop.git
+cd omnistop
+cp .env.example .env   # fill only to deploy; not needed to view the dashboard
+python3 -m http.server 8000
+# open http://localhost:8000/frontend/
+```
+
+Use a testnet key only. Never commit `.env`.
+
 ## What is here
 
 | Path | Purpose |
@@ -89,15 +103,6 @@ Requires Foundry with Solidity 0.8.20.
 forge build
 forge test
 ```
-
-Local page:
-
-```sh
-python3 -m http.server 8000
-# open http://localhost:8000/frontend/
-```
-
-The page also works when served from `frontend/` alone because `frontend/assets` links to the canonical `assets/` directory.
 
 ## Configure
 
@@ -217,7 +222,7 @@ The source of the brief asked for `originTs` inside `LogRecord`. The live ABI in
 | --- | --- |
 | Public repo, open source, MIT | Pass: public at https://github.com/Nassami1/omnistop |
 | README with track, architecture, addresses, hashes, full-loop latency | Pass: live addresses, hashes, and 2,000 ms recorded |
-| Demo video under 3 minutes | PASS: [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, captioned |
+| Demo video under 3 minutes | PASS: [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4), 2:06, captioned; same table at https://nassami1.github.io/omnistop/ |
 | DoraHacks submission complete | FAIL: video ready; DoraHacks upload not done |
 | Timestamps only on Base Sepolia | Pass: no block-number math |
 | Lasna reactive contract, testnet only | Pass: live on Lasna 5318007 |
