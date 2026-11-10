@@ -8,7 +8,7 @@ A pool emits `Sync`. A reactive contract on Lasna compares the reserve ratio wit
 
 **Live site:** [https://nassami1.github.io/omnistop/](https://nassami1.github.io/omnistop/)
 
-**Verification:** [VERIFICATION.md](VERIFICATION.md). **Demo script:** [DEMO.md](DEMO.md). **Demo video:** [demo/omnistop-demo.mp4](demo/omnistop-demo.mp4).
+**Verification:** [VERIFICATION.md](VERIFICATION.md). **Demo script:** [DEMO.md](DEMO.md). **Demo video:** https://youtu.be/iRkBRJyiWC4.
 
 ## Quickstart (local dashboard, 2 minutes)
 
